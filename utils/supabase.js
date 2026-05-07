@@ -10,7 +10,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // This client will be used for all database operations
 export const supabase = (supabaseUrl && supabaseAnonKey) 
   ? createClient(supabaseUrl, supabaseAnonKey)
-  : { from: () => ({ select: () => ({ single: () => ({ data: null, error: { message: 'Supabase not configured' } }), eq: () => ({ eq: () => ({ single: () => ({ data: null, error: { message: 'Supabase not configured' } }) }) }), select: () => ({ data: [], error: { message: 'Supabase not configured' } }) }) }) }
+  : { 
+      from: () => ({ 
+        select: () => ({ 
+          single: () => ({ data: null, error: { message: 'Supabase not configured' } }), 
+          eq: () => ({ 
+            eq: () => ({ 
+              single: () => ({ data: null, error: { message: 'Supabase not configured' } }) 
+            }) 
+          }), 
+          select: () => ({ data: [], error: { message: 'Supabase not configured' } }) 
+        }) 
+      }) 
+    }
 
 
 /**

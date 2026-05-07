@@ -52,8 +52,8 @@ export default function Home() {
 
 
   const today = new Date()
-  const active = payments.filter(p => new Date(p.end_date) > today)
-  const userMembership = payments.find(p => p.member_id == user?.id)
+  const active = (payments || []).filter(p => new Date(p.end_date) > today)
+  const userMembership = (payments || []).find(p => p.member_id == user?.id)
 
   if (!mounted) return null
 
@@ -157,12 +157,12 @@ export default function Home() {
               <div className="stat-card">
                 <FiUsers className="icon" />
                 <h3>{role === 'trainer' ? 'My Trainees' : 'Total Members'}</h3>
-                <p>{role === 'trainer' ? members.filter(m => String(m.trainer_id) === String(user?.id)).length : members.length}</p>
+                <p>{role === 'trainer' ? (members || []).filter(m => String(m.trainer_id) === String(user?.id)).length : (members || []).length}</p>
               </div>
               <div className="stat-card active">
                 <FiCheckCircle className="icon" />
                 <h3>Total Members</h3>
-                <p>{members.length}</p>
+                <p>{(members || []).length}</p>
               </div>
               <div className="stat-card revenue">
                 <FiTrendingUp className="icon" />
@@ -187,8 +187,8 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(role === 'trainer' ? members.filter(m => String(m.trainer_id) === String(user?.id)) : members.slice(-5)).map(m => {
-                        const payment = payments.find(p => p.member_id == m.id)
+                      {(role === 'trainer' ? (members || []).filter(m => String(m.trainer_id) === String(user?.id)) : (members || []).slice(-5)).map(m => {
+                        const payment = (payments || []).find(p => p.member_id == m.id)
                         const expiry = payment ? new Date(payment.end_date) : null
                         return (
                           <tr key={m.id}>
